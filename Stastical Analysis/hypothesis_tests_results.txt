@@ -1,0 +1,99 @@
+
+╔══════════════════════════════════════════════════════════════════╗
+║              HYPOTHESIS TESTS RESULTS                           ║
+║              Week 7: Statistical Business Analysis              ║
+╚══════════════════════════════════════════════════════════════════╝
+
+Date: Week 7 Submission
+Analyst: Data Science Student
+Datasets: business_data.csv (100 rows), customer_churn.csv (500 rows)
+Significance Level: α = 0.05
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TEST 1: One-Way ANOVA — Regional Sales Differences
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+H₀: Mean Total Sales is equal across all regions
+H₁: At least one region has a significantly different mean
+
+Region Breakdown:
+  East    : n=19  Mean=$132,613  SD=$77,107
+  North   : n=28  Mean=$142,273  SD=$99,202
+  South   : n=27  Mean=$138,439  SD=$118,424
+  West    : n=26  Mean=$81,689  SD=$87,844
+
+Test Statistic (F): 2.1644
+p-value           : 0.0972
+Decision          : FAIL TO REJECT H₀
+Conclusion        : No significant regional difference found.
+Business Impact   : Regional marketing strategy should be adjusted. Underperforming
+                    regions need additional investment or targeted campaigns.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TEST 2: Independent Samples t-test — Monthly Charges vs. Churn
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+H₀: E[MonthlyCharges | Churned] ≤ E[MonthlyCharges | Retained]
+H₁: Churned customers pay higher monthly charges (one-tailed)
+
+Group Statistics:
+  Churned  (n=53): Mean = $129.77,  SD = $46.30
+  Retained (n=447): Mean = $111.72, SD = $52.13
+  Difference: $+18.05
+
+Test Statistic (t): 2.4102
+p-value (one-tailed): 0.0082
+Cohen's d (effect): 0.3502 (Small effect size)
+Decision           : REJECT H₀ ✓ SIGNIFICANT
+Conclusion         : Churned customers pay significantly higher monthly charges.
+Business Impact    : High-paying customers are flight risks. Launch proactive retention
+                     programs (loyalty discounts, enhanced service) for customers
+                     paying above-average monthly fees.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TEST 3: Chi-Square Test of Independence — Contract Type vs. Churn
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+H₀: Contract type and churn are independent (no association)
+H₁: Contract type and churn are statistically associated
+
+Contingency Table:
+Churn             0   1
+Contract               
+Month-to-month  135  35
+One year        178   8
+Two year        134  10
+
+Chi² Statistic : 27.7153
+Degrees of Freedom: 2
+p-value        : 0.000001
+Cramér's V     : 0.2354 (Moderate association)
+Decision       : REJECT H₀ ✓ SIGNIFICANT
+Conclusion     : Contract type significantly predicts churn behaviour.
+Business Impact: Month-to-month customers are significantly more likely to churn.
+                 Offer incentives (e.g., 15-20% discount) to upgrade them to
+                 annual or two-year contracts.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TEST 4: One-Sample t-test — Is Mean Sales = $100,000?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+H₀: μ(Total_Sales) = $100,000
+H₁: μ(Total_Sales) ≠ $100,000 (two-tailed)
+
+Sample Mean : $123,650.48
+Benchmark   : $100,000
+n           : 100
+
+Test Statistic (t): 2.3612
+p-value (two-tailed): 0.0202
+Decision           : REJECT H₀ ✓ SIGNIFICANT
+Conclusion         : Mean sales differs significantly from the $100,000 benchmark.
+Business Impact    : Set realistic quarterly targets based on actual statistical
+                     mean with 95% CI bounds rather than arbitrary benchmarks.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SUMMARY TABLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Test  Method           H₀                        p-value   Significant?
+──────────────────────────────────────────────────────────────────────
+1     One-Way ANOVA    Equal sales by region     0.0972    NO ✗
+2     t-test (ind.)    Charges same by churn     0.0082    YES ✓
+3     Chi-Square       Contract ⊥ Churn          0.000001  YES ✓
+4     t-test (1-samp)  Mean sales = $100,000     0.0202    YES ✓
